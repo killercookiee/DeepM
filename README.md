@@ -4,13 +4,13 @@ DeepM is the future
 
 
 
-Project title: Exploring Vision Transformers and Hybrid Architectures for Medical Image Segmentation
+## Project title: Exploring Vision Transformers and Hybrid Architectures for Medical Image Segmentation
 Exploring Vision Transformers and Hybrid Architectures for Medical Image Segmentation
 by Mohammed Salah Hamza Al-Radhi - Monday, 9 September 2024, 4:08 PM
 Number of replies: 0
 Transformer networks revolutionized deep learning, especially in the field of natural language processing, and are gaining much attention in computer vision. They offer great advantages over convolutional networks (CNN), such as higher flexibility, less sensitivity to hyperparameters, and the ability to effectively capture both local and global features in the input data. However, in some cases CNNs still excel, and for some tasks such as segmentation even transformer-based architectures use convolutional layers. Task of the students: explore transformer networks for medical image segmentation. Investigate open-source implementations, find and test a CNN-based baseline solution, and train 1-2 networks with different architectures on a cardiac MRI segmentation dataset (other, even non medica datasets also allowed). Pure-transformer or hybrid transformer-cnn or fully convolutional architectures are ok as well, one must be transformer based. Compare the selected networks by accuracy, throughput, sensitivity to hyperparameter changes, ease of implementation and training, etc. 
 
- Related materials: 
+ ## Related materials: 
 
  https://humanheart-project.creatis.insa-lyon.fr/database/#collection/637218c173e9f0047faa00fb 
  https://www.cardiacatlas.org/lv-segmentation-challenge/
@@ -22,7 +22,7 @@ https://openaccess.thecvf.com/content/ICCV2021/html/Strudel_Segmenter_Transforme
 
 
 
-Group name: DeepM
+## Group name: DeepM
 Members:
 1. Amin Hassairi + FVPKDV
 2. Landolsi Hiba Allah + A8UNMW
@@ -31,7 +31,7 @@ Members:
 
 
 
-File functions:
+## File functions:
 - /medical-image-segmentation         # This is the cloned repository of the dataset
 -    /dataset                        # This is the original dataset
 -    /MIS-working-dataset            # This is the dataset which is prepared
@@ -42,5 +42,5 @@ File functions:
 
 
 
-Instructions:
+## Instructions:
 - Just run DeepM_main_dataprep.ipynb to see how the data was prepared
