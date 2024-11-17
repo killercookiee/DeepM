@@ -30,6 +30,7 @@ Members:
 4. Praneshraj Tiruppur Nagarajan Dhyaneswar + AOMTO9
 
 
+**1st Milestone**
 
 ## File functions:
 - /medical-image-segmentation         # This is the cloned repository of the dataset
@@ -44,3 +45,8 @@ Members:
 
 ## Instructions:
 - Just run DeepM_main_dataprep.ipynb to see how the data was prepared
+
+**2nd Milestone**
+
+## Instructions:
+- Just run DeepM_main_UNETR.ipynb for see how the UNETR model was trained and evaluated
