@@ -49,4 +49,6 @@ Members:
 **2nd Milestone**
 
 ## Instructions:
-- Just run DeepM_main_UNETR.ipynb for see how the UNETR model was trained and evaluated
+- 1. Just run DeepM_main_UNETR.ipynb for see how the UNETR model was trained and evaluated
+
+- 2. Apart from UNETR, to gain fundamental understanding, a trivial Feedforward CNN was implemented on original dataset with **Dice Loss** function. Check Simple_Feedforward_CNN_baseline folder and view ipynb file
