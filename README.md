@@ -50,12 +50,3 @@ Members:
 
 
 **2nd Milestone**
-
-## Introduction:
-- We have made 3 different models with different architecture to evaluate.
-    - UNETR_baseline
-    - TransFuse-basline
-    - Simple_Feedforward_CNN_baseline
-
-# UNETR_baseline instructions
--    
