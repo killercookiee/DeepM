@@ -72,12 +72,12 @@ class BiFusion_block(nn.Module):
 
 
 class TransFuse_S(nn.Module):
-    def __init__(self, num_classes=1, drop_rate=0.2, normal_init=True, pretrained=False):
+    def __init__(self, num_classes=1, drop_rate=0.2, normal_init=True, pretrained=False, pretrained_path=None):
         super(TransFuse_S, self).__init__()
 
         self.resnet = resnet34()
         if pretrained:
-            self.resnet.load_state_dict(torch.load('pretrained/resnet34-333f7ec4.pth'))
+            self.resnet.load_state_dict(torch.load(pretrained_path))
         self.resnet.fc = nn.Identity()
         self.resnet.layer4 = nn.Identity()
 
@@ -172,12 +172,12 @@ class TransFuse_S(nn.Module):
 
 
 class TransFuse_L(nn.Module):
-    def __init__(self, num_classes=1, drop_rate=0.2, normal_init=True, pretrained=False):
+    def __init__(self, num_classes=1, drop_rate=0.2, normal_init=True, pretrained=False, pretrained_path=None):
         super(TransFuse_L, self).__init__()
 
         self.resnet = resnet50()
         if pretrained:
-            self.resnet.load_state_dict(torch.load('pretrained/resnet50-19c8e357.pth'))
+            self.resnet.load_state_dict(torch.load(pretrained_path))
         self.resnet.fc = nn.Identity()
         self.resnet.layer4 = nn.Identity()
 
@@ -276,12 +276,12 @@ class TransFuse_L(nn.Module):
         
 
 class TransFuse_L_384(nn.Module):
-    def __init__(self, num_classes=1, drop_rate=0.2, normal_init=True, pretrained=False):
+    def __init__(self, num_classes=1, drop_rate=0.2, normal_init=True, pretrained=False, pretrained_path=None):
         super(TransFuse_L_384, self).__init__()
 
         self.resnet = resnet50()
         if pretrained:
-            self.resnet.load_state_dict(torch.load('pretrained/resnet50-19c8e357.pth'))
+            self.resnet.load_state_dict(torch.load(pretrained_path))
         self.resnet.fc = nn.Identity()
         self.resnet.layer4 = nn.Identity()
 
