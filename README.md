@@ -46,7 +46,16 @@ Members:
 ## Instructions:
 - Just run DeepM_main_dataprep.ipynb to see how the data was prepared
 
+
+
+
 **2nd Milestone**
 
-## Instructions:
-- Just run DeepM_main_UNETR.ipynb for see how the UNETR model was trained and evaluated
+## Introduction:
+- We have made 3 different models with different architecture to evaluate.
+    - UNETR_baseline
+    - TransFuse-basline
+    - Simple_Feedforward_CNN_baseline
+
+# UNETR_baseline instructions
+-    
