@@ -46,7 +46,3 @@ Members:
 ## Instructions:
 - Just run DeepM_main_dataprep.ipynb to see how the data was prepared
 
-
-
-
-**2nd Milestone**
