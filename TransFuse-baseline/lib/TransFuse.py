@@ -72,16 +72,16 @@ class BiFusion_block(nn.Module):
 
 
 class TransFuse_S(nn.Module):
-    def __init__(self, num_classes=1, drop_rate=0.2, normal_init=True, pretrained=False, pretrained_path=None):
+    def __init__(self, num_classes=1, drop_rate=0.2, normal_init=True, pretrained=False, pretrained_folder_path=None):
         super(TransFuse_S, self).__init__()
 
         self.resnet = resnet34()
         if pretrained:
-            self.resnet.load_state_dict(torch.load(pretrained_path))
+            self.resnet.load_state_dict(torch.load(f"{pretrained_folder_path}/resnet50-19c8e357.pth"))
         self.resnet.fc = nn.Identity()
         self.resnet.layer4 = nn.Identity()
 
-        self.transformer = deit(pretrained=pretrained)
+        self.transformer = deit(pretrained=pretrained, pretrained_folder_path=pretrained_folder_path)
 
         self.up1 = Up(in_ch1=384, out_ch=128)
         self.up2 = Up(128, 64)
@@ -172,16 +172,16 @@ class TransFuse_S(nn.Module):
 
 
 class TransFuse_L(nn.Module):
-    def __init__(self, num_classes=1, drop_rate=0.2, normal_init=True, pretrained=False, pretrained_path=None):
+    def __init__(self, num_classes=1, drop_rate=0.2, normal_init=True, pretrained=False, pretrained_folder_path=None):
         super(TransFuse_L, self).__init__()
 
         self.resnet = resnet50()
         if pretrained:
-            self.resnet.load_state_dict(torch.load(pretrained_path))
+            self.resnet.load_state_dict(torch.load(f"{pretrained_folder_path}/resnet50-19c8e357.pth"))
         self.resnet.fc = nn.Identity()
         self.resnet.layer4 = nn.Identity()
 
-        self.transformer = deit_base(pretrained=pretrained)
+        self.transformer = deit_base(pretrained=pretrained, pretrained_folder_path=pretrained_folder_path)
 
         self.up1 = Up(in_ch1=768, out_ch=512)
         self.up2 = Up(512, 256)
@@ -276,16 +276,16 @@ class TransFuse_L(nn.Module):
         
 
 class TransFuse_L_384(nn.Module):
-    def __init__(self, num_classes=1, drop_rate=0.2, normal_init=True, pretrained=False, pretrained_path=None):
+    def __init__(self, num_classes=1, drop_rate=0.2, normal_init=True, pretrained=False, pretrained_folder_path=None):
         super(TransFuse_L_384, self).__init__()
 
         self.resnet = resnet50()
         if pretrained:
-            self.resnet.load_state_dict(torch.load(pretrained_path))
+            self.resnet.load_state_dict(torch.load(f"{pretrained_folder_path}/resnet50-19c8e357.pth"))
         self.resnet.fc = nn.Identity()
         self.resnet.layer4 = nn.Identity()
 
-        self.transformer = deit_base_384(pretrained=pretrained)
+        self.transformer = deit_base_384(pretrained=pretrained, pretrained_folder_path=pretrained_folder_path)
 
         self.up1 = Up(in_ch1=768, out_ch=512)
         self.up2 = Up(512, 256)
