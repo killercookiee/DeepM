@@ -49,7 +49,7 @@ def deit_small_patch16_224(pretrained=False, pretrained_transformer=None, **kwar
         norm_layer=partial(nn.LayerNorm, eps=1e-6), **kwargs)
     model.default_cfg = _cfg()
     if pretrained:
-        ckpt = torch.load(pretrained_transformer)
+        ckpt = torch.load(pretrained_transformer, weights_only=True)
         model.load_state_dict(ckpt['model'], strict=False)
     
     pe = model.pos_embed[:, 1:, :].detach()
@@ -70,7 +70,7 @@ def deit_base_patch16_224(pretrained=False, pretrained_transformer=None, **kwarg
         norm_layer=partial(nn.LayerNorm, eps=1e-6), **kwargs)
     model.default_cfg = _cfg()
     if pretrained:
-        ckpt = torch.load(pretrained_transformer)
+        ckpt = torch.load(pretrained_transformer, weights_only=True)
         model.load_state_dict(ckpt['model'], strict=False)
 
     pe = model.pos_embed[:, 1:, :].detach()
@@ -91,7 +91,7 @@ def deit_base_patch16_384(pretrained=False, pretrained_transformer=None, **kwarg
         norm_layer=partial(nn.LayerNorm, eps=1e-6), **kwargs)
     model.default_cfg = _cfg()
     if pretrained:
-        ckpt = torch.load(pretrained_transformer)
+        ckpt = torch.load(pretrained_transformer, weights_only=True)
         model.load_state_dict(ckpt["model"])
 
     pe = model.pos_embed[:, 1:, :].detach()
