@@ -49,8 +49,9 @@ Members:
 
 ### 2st & 3rd Milestone 
 
-#### /Simple_Feedforward_CNN_baseline
-- ...   
+### /Fully_CNN_Milestone_3
+- Segmentation implemented using Fully Convolutional Network (FCN), developed from scratch. The ipynb file comprises loading the preprocessed data, FCN model and training with performance evaluation using metrics like IoU, Dice coefficient
+- Please check the documentation file to comprehend better
 
 #### /Transfuse_baseline
 - ...
