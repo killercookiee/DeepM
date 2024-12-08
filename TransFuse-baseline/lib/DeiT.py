@@ -43,13 +43,13 @@ class DeiT(VisionTransformer):
 
 
 @register_model
-def deit_small_patch16_224(pretrained=False, pretrained_folder_path=None, **kwargs):
+def deit_small_patch16_224(pretrained=False, pretrained_transformer=None, **kwargs):
     model = DeiT(
         patch_size=16, embed_dim=384, depth=8, num_heads=6, mlp_ratio=4, qkv_bias=True,
         norm_layer=partial(nn.LayerNorm, eps=1e-6), **kwargs)
     model.default_cfg = _cfg()
     if pretrained:
-        ckpt = torch.load(f'{pretrained_folder_path}/deit_small_patch16_224-cd65a155.pth')
+        ckpt = torch.load(pretrained_transformer)
         model.load_state_dict(ckpt['model'], strict=False)
     
     pe = model.pos_embed[:, 1:, :].detach()
@@ -64,13 +64,13 @@ def deit_small_patch16_224(pretrained=False, pretrained_folder_path=None, **kwar
 
 
 @register_model
-def deit_base_patch16_224(pretrained=False, pretrained_folder_path=None, **kwargs):
+def deit_base_patch16_224(pretrained=False, pretrained_transformer=None, **kwargs):
     model = DeiT(
         patch_size=16, embed_dim=768, depth=12, num_heads=12, mlp_ratio=4, qkv_bias=True,
         norm_layer=partial(nn.LayerNorm, eps=1e-6), **kwargs)
     model.default_cfg = _cfg()
     if pretrained:
-        ckpt = torch.load(f'{pretrained_folder_path}/deit_small_patch16_224-cd65a155.pth')
+        ckpt = torch.load(pretrained_transformer)
         model.load_state_dict(ckpt['model'], strict=False)
 
     pe = model.pos_embed[:, 1:, :].detach()
@@ -85,13 +85,13 @@ def deit_base_patch16_224(pretrained=False, pretrained_folder_path=None, **kwarg
 
 
 @register_model
-def deit_base_patch16_384(pretrained=False, pretrained_folder_path=None, **kwargs):
+def deit_base_patch16_384(pretrained=False, pretrained_transformer=None, **kwargs):
     model = DeiT(
         img_size=384, patch_size=16, embed_dim=768, depth=12, num_heads=12, mlp_ratio=4, qkv_bias=True,
         norm_layer=partial(nn.LayerNorm, eps=1e-6), **kwargs)
     model.default_cfg = _cfg()
     if pretrained:
-        ckpt = torch.load(f'{pretrained_folder_path}/deit_small_patch16_224-cd65a155.pth')
+        ckpt = torch.load(pretrained_transformer)
         model.load_state_dict(ckpt["model"])
 
     pe = model.pos_embed[:, 1:, :].detach()
