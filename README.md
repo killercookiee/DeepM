@@ -46,7 +46,10 @@ Members:
 ## Instructions:
 - Just run DeepM_main_dataprep.ipynb to see how the data was prepared
 
+<<<<<<< HEAD
 **2nd Milestone**
 
 ## Instructions:
 - Just run DeepM_main_UNETR.ipynb for see how the UNETR model was trained and evaluated
+=======
+>>>>>>> origin/main
