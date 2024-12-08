@@ -30,19 +30,38 @@ Members:
 4. Praneshraj Tiruppur Nagarajan Dhyaneswar + AOMTO9
 
 
-**1st Milestone**
 
 ## File functions:
-- /medical-image-segmentation         # This is the cloned repository of the dataset
--    /dataset                        # This is the original dataset
--    /MIS-working-dataset            # This is the dataset which is prepared
 
-- DeepM_main_dataprep.ipynb         # This is file which was used to prepare the data
-- DeepM_main_baseline.ipynb         # This is the file which will be the baseline
-- DeepM_main_baseline.ipynb         # This is the file which will be our model
+### 1st Milestone
 
-
-
-## Instructions:
+#### /ACDC-dataset-preprocessing
 - Just run DeepM_main_dataprep.ipynb to see how the data was prepared
+
+    - /medical-image-segmentation         # This is the cloned repository of the dataset
+    -    /dataset                        # This is the original dataset
+    -    /MIS-working-dataset            # This is the dataset which is prepared
+
+    - DeepM_main_dataprep.ipynb         # This is file which was used to prepare the data
+    - DeepM_main_baseline.ipynb         # This is the file which will be the baseline
+    - DeepM_main_baseline.ipynb         # This is the file which will be our model
+
+
+### 2st & 3rd Milestone 
+
+#### /Simple_Feedforward_CNN_baseline
+- ...   
+
+#### /Transfuse_baseline
+- ...
+
+#### /UNETR_baseline
+- Just run DeepM_main_UNETR.ipynb to train the model from scratch and save the best performed model.
+  
+    - Baseline UNETR model trained from scratch using the Synapse images https://www.synapse.org/#!Synapse:syn3193805/wiki/217752
+
+#### /UNETR_fine_tuning_model
+- Just run DeepM_main_FineTune_UNETR_model.ipynb to fine tune the model.
+
+    - Using the pretrained model from the /UNETR_baseline, and fine tuning it with the preprocessed ACDC dataset https://humanheart-project.creatis.insa-lyon.fr/database/#collection/637218c173e9f0047faa00fb
 
