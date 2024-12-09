@@ -51,8 +51,7 @@ class SkinDataset(data.Dataset):
         
         image = self.images[index]
         gt = self.gts[index]
-        gt = gt / 255.0
-
+        
         # Handle grayscale images (convert to 3 channels if necessary)
         if len(image.shape) == 2:  # Grayscale image (height, width)
             image = np.expand_dims(image, axis=-1)  # Convert to (height, width, 1)
