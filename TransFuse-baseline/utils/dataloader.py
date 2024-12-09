@@ -40,11 +40,15 @@ class SkinDataset(data.Dataset):
         """
         Converts a single-channel mask to one-hot encoding with num_classes channels.
         """
+        if self.num_classes == 1:
+            # No one-hot encoding needed; return the mask as is
+            return mask.astype(np.float32)
+        
         h, w = mask.shape
         one_hot = np.zeros((self.num_classes, h, w), dtype=np.float32)
         one_hot[0] = (mask == 0).astype(np.float32)  # Background
-        one_hot[1] = (mask == 1).astype(np.float32)  # Foreground (original mask values)
-        # Additional classes (2 to num_classes-1) can be added as needed
+        for i in range(1, self.num_classes):
+            one_hot[i] = (mask == i).astype(np.float32)  # Foreground or other classes
         return one_hot
 
     def __getitem__(self, index):
@@ -62,11 +66,13 @@ class SkinDataset(data.Dataset):
         image = self.img_transform(transformed['image'])
         gt = transformed['mask']
 
-        # Dynamically one-hot encode the mask
-        gt_one_hot = self.one_hot_encode(gt)
-        gt_one_hot = torch.from_numpy(gt_one_hot)  # Convert to tensor
+        # Dynamically one-hot encode the mask if necessary
+        gt_encoded = self.one_hot_encode(gt)
+        gt_tensor = torch.from_numpy(gt_encoded)  # Convert to tensor
+        if self.num_classes == 1:
+            gt_tensor = gt_tensor.unsqueeze(0)  # Add channel dimension for consistency
 
-        return image, gt_one_hot
+        return image, gt_tensor
 
     def __len__(self):
         return self.size
@@ -81,6 +87,7 @@ def get_loader(image_root, gt_root, batchsize, shuffle=True, num_workers=4, pin_
                                   num_workers=num_workers,
                                   pin_memory=pin_memory)
     return data_loader
+
 
 class test_dataset:
     def __init__(self, image_root, gt_root, num_classes=1):
