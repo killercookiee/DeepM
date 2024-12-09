@@ -76,10 +76,12 @@ class TransFuse_S(nn.Module):
         super(TransFuse_S, self).__init__()
 
         self.resnet = resnet34()
-        self.transformer = deit(pretrained=pretrained)
         if pretrained:
             self.resnet.load_state_dict(torch.load(pretrained_model))
             self.transformer = deit(pretrained=pretrained, pretrained_transformer=pretrained_transformer)
+        else:
+            self.transformer = deit(pretrained=pretrained)
+
 
         self.resnet.fc = nn.Identity()
         self.resnet.layer4 = nn.Identity()
@@ -177,10 +179,11 @@ class TransFuse_L(nn.Module):
         super(TransFuse_L, self).__init__()
 
         self.resnet = resnet50()
-        self.transformer = deit_base(pretrained=pretrained)
         if pretrained:
             self.resnet.load_state_dict(torch.load(pretrained_model))
             self.transformer = deit_base(pretrained=pretrained, pretrained_transformer=pretrained_transformer)
+        else:
+            self.transformer = deit_base(pretrained=pretrained)
 
         self.resnet.fc = nn.Identity()
         self.resnet.layer4 = nn.Identity()
@@ -282,10 +285,12 @@ class TransFuse_L_384(nn.Module):
         super(TransFuse_L_384, self).__init__()
 
         self.resnet = resnet50()
-        self.transformer = deit_base_384(pretrained=pretrained)
         if pretrained:
             self.resnet.load_state_dict(torch.load(pretrained_model))
             self.transformer = deit_base_384(pretrained=pretrained, pretrained_transformer=pretrained_transformer)
+        else:
+            self.transformer = deit_base_384(pretrained=pretrained)
+        
         self.resnet.fc = nn.Identity()
         self.resnet.layer4 = nn.Identity()
 
