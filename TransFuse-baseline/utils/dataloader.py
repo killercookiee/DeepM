@@ -44,7 +44,7 @@ class SkinDataset(data.Dataset):
         one_hot = np.zeros((self.num_classes, h, w), dtype=np.float32)
         one_hot[0] = (mask == 0).astype(np.float32)  # Background
         one_hot[1] = (mask == 1).astype(np.float32)  # Foreground (original mask values)
-        # Remaining channels (2 to num_classes-1) remain zero
+        # Additional classes (2 to num_classes-1) can be added as needed
         return one_hot
 
     def __getitem__(self, index):
@@ -52,6 +52,11 @@ class SkinDataset(data.Dataset):
         image = self.images[index]
         gt = self.gts[index]
         gt = gt / 255.0
+
+        # Handle grayscale images (convert to 3 channels if necessary)
+        if len(image.shape) == 2:  # Grayscale image (height, width)
+            image = np.expand_dims(image, axis=-1)  # Convert to (height, width, 1)
+            image = np.repeat(image, 3, axis=-1)  # Convert to (height, width, 3) by repeating
 
         # Apply augmentations
         transformed = self.transform(image=image, mask=gt)
