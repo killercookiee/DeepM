@@ -67,10 +67,12 @@ class SkinDataset(data.Dataset):
         gt = transformed['mask']
 
         # Dynamically one-hot encode the mask if necessary
-        gt_encoded = self.one_hot_encode(gt)
-        gt_tensor = torch.from_numpy(gt_encoded)  # Convert to tensor
-        if self.num_classes == 1:
-            gt_tensor = gt_tensor.unsqueeze(0)  # Add channel dimension for consistency
+        if self.num_classes > 1:
+            gt_encoded = self.one_hot_encode(gt)
+            gt_tensor = torch.from_numpy(gt_encoded)  # Convert to tensor
+        else:
+            # When num_classes=1, just normalize the mask and add a channel dimension
+            gt_tensor = torch.from_numpy(gt.astype(np.float32)).unsqueeze(0)
 
         return image, gt_tensor
 
@@ -87,6 +89,7 @@ def get_loader(image_root, gt_root, batchsize, shuffle=True, num_workers=4, pin_
                                   num_workers=num_workers,
                                   pin_memory=pin_memory)
     return data_loader
+
 
 
 class test_dataset:
