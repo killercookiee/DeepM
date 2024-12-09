@@ -13,7 +13,7 @@ class SkinDataset(data.Dataset):
     """
     dataloader for skin lesion segmentation tasks
     """
-    def __init__(self, image_root, gt_root, num_classes=5):
+    def __init__(self, image_root, gt_root, num_classes=1):
         self.images = np.load(image_root)
         self.gts = np.load(gt_root)
         self.size = len(self.images)
@@ -73,7 +73,7 @@ class SkinDataset(data.Dataset):
         return self.size
 
 
-def get_loader(image_root, gt_root, batchsize, shuffle=True, num_workers=4, pin_memory=True, num_classes=4):
+def get_loader(image_root, gt_root, batchsize, shuffle=True, num_workers=4, pin_memory=True, num_classes=1):
 
     dataset = SkinDataset(image_root, gt_root, num_classes=num_classes)
     data_loader = data.DataLoader(dataset=dataset,
@@ -108,9 +108,6 @@ class test_dataset:
         
         # Apply image transformations
         image = self.transform(image).unsqueeze(0)  # Add batch dimension
-
-        # Normalize GT mask
-        gt = gt / 255.0  # Normalize to range [0, 1]
 
         # Handle multi-class masks if required
         if self.num_classes > 1:
