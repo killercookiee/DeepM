@@ -73,7 +73,7 @@ class SkinDataset(data.Dataset):
         return self.size
 
 
-def get_loader(image_root, gt_root, batchsize, shuffle=True, num_workers=4, pin_memory=True, num_classes=5):
+def get_loader(image_root, gt_root, batchsize, shuffle=True, num_workers=4, pin_memory=True, num_classes=4):
 
     dataset = SkinDataset(image_root, gt_root, num_classes=num_classes)
     data_loader = data.DataLoader(dataset=dataset,
@@ -84,7 +84,7 @@ def get_loader(image_root, gt_root, batchsize, shuffle=True, num_workers=4, pin_
     return data_loader
 
 class test_dataset:
-    def __init__(self, image_root, gt_root):
+    def __init__(self, image_root, gt_root, num_classes=1):
         self.images = np.load(image_root)
         self.gts = np.load(gt_root)
 
@@ -92,19 +92,36 @@ class test_dataset:
             transforms.ToTensor(),
             transforms.Normalize([0.485, 0.456, 0.406],
                                  [0.229, 0.224, 0.225])
-            ])
-        self.gt_transform = transforms.ToTensor()
+        ])
+        self.num_classes = num_classes
         self.size = len(self.images)
         self.index = 0
 
     def load_data(self):
+        # Load the current image and mask
         image = self.images[self.index]
-        image = self.transform(image).unsqueeze(0)
         gt = self.gts[self.index]
-        gt = gt/255.0
-        self.index += 1
 
+        # Convert grayscale to RGB if needed
+        if len(image.shape) == 2:  # Grayscale image
+            image = np.stack([image] * 3, axis=-1)  # Convert to RGB
+        
+        # Apply image transformations
+        image = self.transform(image).unsqueeze(0)  # Add batch dimension
+
+        # Normalize GT mask
+        gt = gt / 255.0  # Normalize to range [0, 1]
+
+        # Handle multi-class masks if required
+        if self.num_classes > 1:
+            gt = torch.tensor(gt, dtype=torch.long)  # Convert to long type
+            gt = torch.nn.functional.one_hot(gt, num_classes=self.num_classes).permute(2, 0, 1).float()
+
+        self.index += 1
         return image, gt
+
+    def __len__(self):
+        return self.size
 
 
 
