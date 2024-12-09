@@ -13,10 +13,11 @@ class SkinDataset(data.Dataset):
     """
     dataloader for skin lesion segmentation tasks
     """
-    def __init__(self, image_root, gt_root):
+    def __init__(self, image_root, gt_root, num_classes=5):
         self.images = np.load(image_root)
         self.gts = np.load(gt_root)
         self.size = len(self.images)
+        self.num_classes = num_classes
 
         self.img_transform = transforms.Compose([
             transforms.ToTensor(),
@@ -35,31 +36,52 @@ class SkinDataset(data.Dataset):
             ]
         )
 
+    def one_hot_encode(self, mask):
+        """
+        Converts a single-channel mask to one-hot encoding with num_classes channels.
+        """
+        h, w = mask.shape
+        one_hot = np.zeros((self.num_classes, h, w), dtype=np.float32)
+        one_hot[0] = (mask == 0).astype(np.float32)  # Background
+        one_hot[1] = (mask == 1).astype(np.float32)  # Foreground (original mask values)
+        # Additional classes (2 to num_classes-1) can be added as needed
+        return one_hot
+
     def __getitem__(self, index):
         
         image = self.images[index]
         gt = self.gts[index]
-        gt = gt/255.0
+        gt = gt / 255.0
 
+        # Handle grayscale images (convert to 3 channels if necessary)
+        if len(image.shape) == 2:  # Grayscale image (height, width)
+            image = np.expand_dims(image, axis=-1)  # Convert to (height, width, 1)
+            image = np.repeat(image, 3, axis=-1)  # Convert to (height, width, 3) by repeating
+
+        # Apply augmentations
         transformed = self.transform(image=image, mask=gt)
         image = self.img_transform(transformed['image'])
-        gt = self.gt_transform(transformed['mask'])
-        return image, gt
+        gt = transformed['mask']
+
+        # Dynamically one-hot encode the mask
+        gt_one_hot = self.one_hot_encode(gt)
+        gt_one_hot = torch.from_numpy(gt_one_hot)  # Convert to tensor
+
+        return image, gt_one_hot
 
     def __len__(self):
         return self.size
 
 
-def get_loader(image_root, gt_root, batchsize, shuffle=True, num_workers=4, pin_memory=True):
+def get_loader(image_root, gt_root, batchsize, shuffle=True, num_workers=4, pin_memory=True, num_classes=5):
 
-    dataset = SkinDataset(image_root, gt_root)
+    dataset = SkinDataset(image_root, gt_root, num_classes=num_classes)
     data_loader = data.DataLoader(dataset=dataset,
                                   batch_size=batchsize,
                                   shuffle=shuffle,
                                   num_workers=num_workers,
                                   pin_memory=pin_memory)
     return data_loader
-
 
 class test_dataset:
     def __init__(self, image_root, gt_root):
