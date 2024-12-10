@@ -28,7 +28,6 @@ class DeiT(VisionTransformer):
     def forward(self, x):
         # taken from https://github.com/rwightman/pytorch-image-models/blob/master/timm/models/vision_transformer.py
         # with slight modifications to add the dist_token
-        B = x.shape[0]
         x = self.patch_embed(x)
         pe = self.pos_embed
 

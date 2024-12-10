@@ -161,6 +161,22 @@ class PatchEmbed(nn.Module):
         #    f"Input image size ({H}*{W}) doesn't match model ({self.img_size[0]}*{self.img_size[1]})."
         x = self.proj(x).flatten(2).transpose(1, 2)
         return x
+    
+class HybridEmbed(nn.Module):
+    """ CNN Feature Map Embedding
+    """
+    def __init__(self, backbone, img_size=224, in_chans=3, embed_dim=768):
+        super().__init__()
+        self.num_features = embed_dim
+        self.backbone = backbone
+        self.num_patches = self.backbone.num_features
+        self.proj = nn.Linear(self.num_patches, embed_dim)
+
+    def forward(self, x):
+        x = self.backbone(x)
+        x = x.flatten(2).transpose(1, 2)
+        x = self.proj(x)
+        return x
 
 
 
