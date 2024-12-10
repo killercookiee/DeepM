@@ -7,31 +7,25 @@ from utils.dataloader import test_dataset
 import imageio
 
 
-def mean_iou_np(y_true, y_pred, **kwargs):
-    """
-    compute mean iou for binary segmentation map via numpy
-    """
-    axes = (0, 1) 
-    intersection = np.sum(np.abs(y_pred * y_true), axis=axes) 
-    mask_sum = np.sum(np.abs(y_true), axis=axes) + np.sum(np.abs(y_pred), axis=axes)
-    union = mask_sum  - intersection 
-    
-    smooth = .001
-    iou = (intersection + smooth) / (union + smooth)
-    return iou
+def mean_dice_np(gt, pred, num_classes):
+    dice_scores = []
+    for c in range(num_classes):
+        gt_c = (gt == c)
+        pred_c = (pred == c)
+        intersection = np.sum(gt_c & pred_c)
+        union = np.sum(gt_c) + np.sum(pred_c)
+        dice_scores.append(2 * intersection / union if union > 0 else 1.0)
+    return np.mean(dice_scores)
 
-
-def mean_dice_np(y_true, y_pred, **kwargs):
-    """
-    compute mean dice for binary segmentation map via numpy
-    """
-    axes = (0, 1) # W,H axes of each image
-    intersection = np.sum(np.abs(y_pred * y_true), axis=axes) 
-    mask_sum = np.sum(np.abs(y_true), axis=axes) + np.sum(np.abs(y_pred), axis=axes)
-    
-    smooth = .001
-    dice = 2*(intersection + smooth)/(mask_sum + smooth)
-    return dice
+def mean_iou_np(gt, pred, num_classes):
+    iou_scores = []
+    for c in range(num_classes):
+        gt_c = (gt == c)
+        pred_c = (pred == c)
+        intersection = np.sum(gt_c & pred_c)
+        union = np.sum(gt_c | pred_c)
+        iou_scores.append(intersection / union if union > 0 else 1.0)
+    return np.mean(iou_scores)
 
 
 if __name__ == '__main__':
